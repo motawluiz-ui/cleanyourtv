@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Launcher configuration ajustada para o PROSK-1000: leve, com menu de todos os apps. Comentarios originais removidos; os nomes e valores padrao foram mantidos. -->
+<!-- Launcher configuration ajustada e otimizada para o PROSK-1000: leve, sem efeitos visuais pesados e com menu de todos os apps limpo. -->
 <resources>
 
     <string-array name="settings_fallback_components" translatable="false">
@@ -57,6 +57,7 @@
 
     <string-array name="input_sources" translatable="false">
     </string-array>
+    
     <integer-array name="settings_key_scancodes">
     </integer-array>
     <integer-array name="settings_key_keycodes">
@@ -87,7 +88,10 @@
 
     <bool name="dock_row">true</bool>
     <bool name="top_menu">false</bool>
-    <bool name="launcher_settings_button">false</bool>
+    
+    <!-- MUDANCA: Ativado para garantir acesso rápido aos ajustes do launcher -->
+    <bool name="launcher_settings_button">true</bool>
+    
     <bool name="dock_glass">false</bool>
     <bool name="dock_band">true</bool>
     <bool name="single_row">false</bool>
@@ -101,8 +105,8 @@
     <bool name="wifi_status_color">false</bool>
     <bool name="wifi_status_warnings">false</bool>
 
-    <!-- MUDANCA: botao do menu de todos os apps no topo -->
-    <bool name="library_button">true</bool>
+    <!-- MUDANCA: Apenas a pílula de biblioteca ativa para evitar duplicação no topo -->
+    <bool name="library_button">false</bool>
     <bool name="show_library_pill">true</bool>
     <integer name="wifi_label_width">0</integer>
     <bool name="show_network_pill">true</bool>
@@ -123,7 +127,8 @@
     <bool name="dock_title">true</bool>
     <integer name="columns">4</integer>
 
-    <bool name="animations">true</bool>
+    <!-- MUDANCA: Desativado para economizar recursos da GPU -->
+    <bool name="animations">false</bool>
     <bool name="advanced_effects">false</bool>
     <bool name="show_home_settings_shortcut">false</bool>
 
@@ -136,8 +141,9 @@
     <string-array name="library_apps" translatable="false">
     </string-array>
 
-    <!-- MUDANCA: o menu de apps nunca oferece os menus de fabrica -->
+    <!-- MUDANCA: o menu de apps oculta o launcher antigo e os menus de fabrica -->
     <string-array name="library_excluded_apps" translatable="false">
+        <item>com.a.nova.launcher</item>
         <item>com.yxt.factorytest</item>
         <item>com.softwinner.dragonbox</item>
         <item>com.softwinner.agingdragonbox</item>
@@ -160,17 +166,18 @@
     <integer name="cinematic_scrim">100</integer>
     <integer name="cinematic_art">50</integer>
 
-    <bool name="ambient_glow">true</bool>
-    <bool name="glow_snap">true</bool>
+    <!-- MUDANCA: Efeitos de brilho e transparência desativados -->
+    <bool name="ambient_glow">false</bool>
+    <bool name="glow_snap">false</bool>
     <bool name="app_glow">false</bool>
     <bool name="fade_rows">false</bool>
     <integer name="home_idle_clock_minutes">0</integer>
     <bool name="back_opens_clock">false</bool>
     <bool name="clock_wallpaper">false</bool>
     <integer name="clock_wallpaper_dim">50</integer>
-    <bool name="clock_glow">true</bool>
+    <bool name="clock_glow">false</bool>
     <string name="glow_style" translatable="false">radial</string>
-    <string name="glass_style" translatable="false">glass</string>
+    <string name="glass_style" translatable="false">flat</string>
 
     <string-array name="icon_tiles" translatable="false">
     </string-array>
