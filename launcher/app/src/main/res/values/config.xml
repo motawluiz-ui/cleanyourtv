@@ -1,3 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Launcher configuration. Edit this file, then run launcher/build-and-install.sh.
+  Or leave it and push a theme instead: tools/theme.sh themes/<name> puts a config.json (same keys, see
+  themes/README.md) and an optional wallpaper on the TV, and the launcher overlays it at start.
+  Package names: on the TV run `pm list packages` (tools/tv.py 'pm list packages').
+-->
 <resources>
 
     <!-- Tried in order when no standard settings handler is usable; each package must also be visible
@@ -10,10 +17,9 @@
 
     <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped. -->
     <string-array name="dock_apps">
-        <item>com.nathnetwork.xciptv</item>
-        <item>org.videolan.vlc</item>
-        <item>com.instantbits.cast.receiver</item>
         <item>com.google.android.youtube.tv</item>
+        <item>com.nathnetwork.xciptv</item>
+        <item>com.mercadolibre.android.mplay_tv</item>
     </string-array>
     <!-- With fewer dock_apps than columns (or a dock app that is not installed), the free dock slots take
          the first grid apps, so the dock never shows a gap. false leaves them empty (#162); a theme can
@@ -24,10 +30,8 @@
     <string-array name="hidden_apps">
         <item>com.mediatek.wwtv.tvcenter</item>
         <item>com.mitv.gallery</item>
-        <item>com.a.nova.launcher</item>
-        <item>com.yxt.factorytest</item>
-        <item>com.softwinner.dragonbox</item>
-        <item>com.softwinner.agingdragonbox</item>
+        <item>com.yxt.btremote</item>
+        <item>com.yxt.ytconfirm</item>
     </string-array>
 
     <!-- The TV's Live TV / tuner app, offered at the end of the Inputs menu. Leave empty to omit. -->
@@ -163,13 +167,12 @@
     <string-array name="input_sources" translatable="false">
     </string-array>
 
-    <!-- SCANCODES DO BOTAO SETTINGS. Remote buttons that open Settings, by Linux scancode
-         (HOME_KEY_SERVICE=1 build-and-install.sh). Remotes that send KEYCODE_SETTINGS need no entry.
-         Some send a code Android does not map: the Xiaomi/Fengmi projector remote's gear button is
-         scancode 384 (KEY_TAPE). Find yours with `tools/tv.py 'getevent -lt'` while pressing the button.
-         A HID consumer-control usage prints an evdev MSC_SCAN there, which is not always the scanCode
-         the framework reports, so a number that takes nothing is no proof the press never arrived.
-         Leave empty to omit. -->
+    <!-- Remote buttons that open Settings, by Linux scancode (HOME_KEY_SERVICE=1 build-and-install.sh). Remotes
+         that send KEYCODE_SETTINGS need no entry. Some send a code Android does not map: the Xiaomi/Fengmi
+         projector remote's gear button is scancode 384 (KEY_TAPE). Find yours with
+         `tools/tv.py 'getevent -lt'` while pressing the button - but a HID consumer-control usage prints an
+         evdev MSC_SCAN there, which is not always the scanCode the framework reports, so a number that takes
+         nothing is no proof the press never arrived. Leave empty to omit. -->
     <integer-array name="settings_key_scancodes">
     </integer-array>
     <!-- The same by Android keycode, for buttons whose scancode is shared. TCL Google TV remotes send their
@@ -266,8 +269,7 @@
          remote does nothing (Philips TPM191E, Android 12). The long_press_timeout setting does not move that limit
          there. HomeKeyService (HOME_KEY_SERVICE=1) then takes the Home key itself and opens Home on release. Needs
          key_filter, so held keys such as Volume Up/Down stop repeating (confirmed on that Philips; single presses
-         still step). This explains why held keys stop repeating when key_filter is enabled. A theme's config.json
-         can set it too. Off by default. -->
+         still step). A theme's config.json can set it too. Off by default. -->
     <bool name="home_long_press_home">false</bool>
 
     <!-- Show the Solar Hijri (Shamsi) date used in Iran and Afghanistan, e.g. "27 Mehr 1405", above the
@@ -455,10 +457,6 @@
          hidden_apps and offers it as "Add to Home" anyway. Empty (off) by default, so existing setups
          change nothing. -->
     <string-array name="library_excluded_apps" translatable="false">
-        <item>com.a.nova.launcher</item>
-        <item>com.yxt.factorytest</item>
-        <item>com.softwinner.dragonbox</item>
-        <item>com.softwinner.agingdragonbox</item>
     </string-array>
 
     <!-- Module cards: an app that declares a card (docs/specs/card.md) can stand in for its tile with its own

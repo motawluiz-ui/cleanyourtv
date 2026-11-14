@@ -1,6 +1,15 @@
+# Monta o APK do launcher (com.gathin.tvhome) para a TV Box.
+# Roda sozinho a cada envio que mexe em launcher/ no main, ou na mão pela aba Actions.
+# Assina sempre com a MESMA chave (segredo DEBUG_KEYSTORE_B64), para as próximas versões
+# instalarem por cima da anterior sem precisar desinstalar.
 name: Build launcher APK
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "launcher/**"
+      - ".github/workflows/build-apk.yml"
   workflow_dispatch:
 
 jobs:
@@ -12,15 +21,26 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
-      - name: Build debug APK
+      - name: Usar a chave fixa de assinatura
+        env:
+          DEBUG_KEYSTORE_B64: ${{ secrets.DEBUG_KEYSTORE_B64 }}
+        run: |
+          if [ -z "$DEBUG_KEYSTORE_B64" ]; then
+            echo "Segredo DEBUG_KEYSTORE_B64 não configurado: o APK sai com uma chave nova a cada montagem."
+            exit 0
+          fi
+          mkdir -p ~/.android
+          echo "$DEBUG_KEYSTORE_B64" | base64 -d > ~/.android/debug.keystore
+
+      - name: Montar o APK
         working-directory: launcher
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
       - uses: actions/upload-artifact@v4
         with:
           name: launcher-apk
-          path: launcher/app/build/outputs/apk/debug/*.apk
+          path: launcher/app/build/outputs/apk/release/app-release.apk
