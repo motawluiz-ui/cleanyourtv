@@ -31,14 +31,15 @@ jobs:
             echo "Segredo DEBUG_KEYSTORE_B64 não configurado: o APK sai com uma chave nova a cada montagem."
             exit 0
           fi
-          mkdir -p ~/.android
-          echo "$DEBUG_KEYSTORE_B64" | base64 -d > ~/.android/debug.keystore
+          echo "$DEBUG_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/tvhome.keystore"
+          # Passada direto ao Gradle: a pasta padrão da chave de teste muda nos computadores do GitHub.
+          echo "SIGNING_ARGS=-Pandroid.injected.signing.store.file=$RUNNER_TEMP/tvhome.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android" >> "$GITHUB_ENV"
 
       - name: Montar o APK
         working-directory: launcher
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+          ./gradlew assembleRelease --no-daemon $SIGNING_ARGS
 
       - uses: actions/upload-artifact@v4
         with:
